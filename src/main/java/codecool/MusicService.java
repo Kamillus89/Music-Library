@@ -24,6 +24,8 @@ public class MusicService {
         findAlbumsByTimeRange(albums,0,3.5);
         System.out.println("#############################################################################################");
         findTheShortestAlbum(albums);
+        System.out.println("#############################################################################################");
+        findTheLongestAlbum(albums);
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -48,6 +50,11 @@ public class MusicService {
                 .ifPresent(System.out::println);
     }
 
+    public void findTheLongestAlbum(List<Album> albums) {
+        albums.stream()
+                .max(Comparator.comparingDouble(Album::getLength))
+                .ifPresent(System.out::println);
+    }
     
 
     private List<Album> readAlbumDataFromFile() {
