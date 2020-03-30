@@ -17,11 +17,21 @@ public class MusicService {
     public MusicService() {
         this.albums = readAlbumDataFromFile();
         showAllAlbums(this.albums);
+        System.out.println("#############################################################################################");
+        findAllAlbumsByGenre(albums,"opera");
     }
 
     public void showAllAlbums(List<Album> albums){
         albums.forEach(System.out::println);
     }
+
+    public void findAllAlbumsByGenre(List<Album> albums, String genre) {
+        albums.stream()
+                .filter(album -> album.getGenre().equalsIgnoreCase(genre))
+                .forEach(System.out::println);
+    }
+
+    
 
     private List<Album> readAlbumDataFromFile() {
         try {
