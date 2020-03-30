@@ -2,19 +2,36 @@ package codecool;
 
 import codecool.dao.AlbumDAO;
 import codecool.dao.AlbumDAOImpl;
+import codecool.music.Album;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import java.util.List;
 
 public class MusicService {
-    public static void main( String[] args ) {
-        AlbumDAO albumDAO = new AlbumDAOImpl();
-        String filePath = "src/main/resources/albums-repo.csv";
 
+    private AlbumDAO albumDAO = new AlbumDAOImpl();
+    private String filePath = "src/main/resources/albums-repo.csv";
+    private List<Album> albums;
+
+    public MusicService() {
+        this.albums = readAlbumDataFromFile();
+        showAllAlbums(this.albums);
+    }
+
+    public void showAllAlbums(List<Album> albums){
+        albums.forEach(System.out::println);
+    }
+
+    private List<Album> readAlbumDataFromFile() {
         try {
-            albumDAO.getAlbumsFromFile(filePath);
+            albums = albumDAO.getAlbumsFromFile(filePath);
+        } catch (NoSuchFileException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return albums;
     }
 
 }
