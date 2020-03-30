@@ -19,6 +19,8 @@ public class MusicService {
         showAllAlbums(this.albums);
         System.out.println("#############################################################################################");
         findAllAlbumsByGenre(albums,"opera");
+        System.out.println("#############################################################################################");
+        findAlbumsByTimeRange(albums,0,3.5);
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -31,7 +33,11 @@ public class MusicService {
                 .forEach(System.out::println);
     }
 
-    
+    public void findAlbumsByTimeRange(List<Album> albums, double start, double end) {
+        albums.stream()
+                .filter(album -> album.getLength() >= start && album.getLength() <= end)
+                .forEach(System.out::println);
+    }
 
     private List<Album> readAlbumDataFromFile() {
         try {
