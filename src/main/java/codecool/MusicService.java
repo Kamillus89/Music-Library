@@ -6,6 +6,7 @@ import codecool.music.Album;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.Comparator;
 import java.util.List;
 
 public class MusicService {
@@ -21,6 +22,8 @@ public class MusicService {
         findAllAlbumsByGenre(albums,"opera");
         System.out.println("#############################################################################################");
         findAlbumsByTimeRange(albums,0,3.5);
+        System.out.println("#############################################################################################");
+        findTheShortestAlbum(albums);
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -38,6 +41,14 @@ public class MusicService {
                 .filter(album -> album.getLength() >= start && album.getLength() <= end)
                 .forEach(System.out::println);
     }
+
+    public void findTheShortestAlbum(List<Album> albums) {
+        albums.stream()
+                .min(Comparator.comparingDouble(Album::getLength))
+                .ifPresent(System.out::println);
+    }
+
+    
 
     private List<Album> readAlbumDataFromFile() {
         try {
