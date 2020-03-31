@@ -66,14 +66,20 @@ public class MusicService {
     }
 
     public void getTheFullReport(List<Album> albums){
-        view.showFullRaportHeading();
+        view.showFullReportHeading();
         view.showTheLongestAlbum(findTheLongestAlbum(albums));
         view.showTheShortestAlbum(findTheShortestAlbum(albums));
         view.showTheOldestAlbum(
                 albums.stream()
                 .min(Comparator.comparingInt(Album::getReleaseYear))
-                .get());
-         
+                .get()
+                );
+        view.showTheYoungestAlbum(
+                albums.stream()
+                .max((a1,a2) -> a1.getReleaseYear() - a2.getReleaseYear())
+                .get()
+                );
+        
 
     }
 

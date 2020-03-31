@@ -32,7 +32,15 @@ public class View {
         );
     }
 
-    public void showFullRaportHeading() {
+    public void showTheYoungestAlbum(Album album) {
+        System.out.println("The youngest album: "
+                + album.getAlbumName() + " - "
+                + album.getArtistName() + " - "
+                + "year of release: " + BLACK_BOLD + album.getReleaseYear() + RESET
+        );
+    }
+
+    public void showFullReportHeading() {
         System.out.println(BLACK_BOLD + BLACK_UNDERLINED + "Full raport: " + RESET);
     }
 
