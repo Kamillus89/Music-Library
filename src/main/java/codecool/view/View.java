@@ -2,6 +2,8 @@ package codecool.view;
 
 import codecool.music.Album;
 
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static codecool.view.ConsoleColors.*;
@@ -38,6 +40,15 @@ public class View {
                 + album.getArtistName() + " - "
                 + "year of release: " + BLACK_BOLD + album.getReleaseYear() + RESET
         );
+    }
+
+    public void showAlbumsCount(long countOfAlbums) {
+        System.out.println("Number of albums in the library: " + BLACK_BOLD + countOfAlbums + RESET);
+    }
+
+    public void showAlbumsCountByGenre(Map<String, Integer> genreCounter){
+        System.out.println("Count of albums by genre: ");
+        genreCounter.forEach((k,v) -> System.out.println(k + " : " + BLACK_BOLD + v + RESET));
     }
 
     public void showFullReportHeading() {

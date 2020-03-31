@@ -8,7 +8,10 @@ import codecool.view.View;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MusicService {
 
@@ -79,8 +82,18 @@ public class MusicService {
                 .max((a1,a2) -> a1.getReleaseYear() - a2.getReleaseYear())
                 .get()
                 );
-        
-
+        view.showAlbumsCount(
+                albums.stream()
+                .count()
+        );
+        view.showAlbumsCountByGenre(
+                albums.stream()
+                .collect(Collectors.groupingBy(Album::getGenre,
+                        Collectors.collectingAndThen(
+                                Collectors.mapping(Album::getGenre, Collectors.toList()),
+                                List::size
+                        )))
+                );
     }
 
     private List<Album> readAlbumDataFromFile() {
