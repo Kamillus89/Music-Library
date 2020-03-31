@@ -26,6 +26,8 @@ public class MusicService {
         findTheShortestAlbum(albums);
         System.out.println("#############################################################################################");
         findTheLongestAlbum(albums);
+        System.out.println("#############################################################################################");
+        findAlbumsByArtist(albums,"Jane Austen");
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -55,7 +57,12 @@ public class MusicService {
                 .max(Comparator.comparingDouble(Album::getLength))
                 .ifPresent(System.out::println);
     }
-    
+
+    public void findAlbumsByArtist(List<Album> albums, String artistName) {
+        albums.stream()
+                .filter(album -> album.getArtistName().equalsIgnoreCase(artistName))
+                .forEach(System.out::println);
+    }
 
     private List<Album> readAlbumDataFromFile() {
         try {
