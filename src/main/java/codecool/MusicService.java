@@ -3,6 +3,7 @@ package codecool;
 import codecool.dao.AlbumDAO;
 import codecool.dao.AlbumDAOImpl;
 import codecool.music.Album;
+import codecool.view.View;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -14,20 +15,20 @@ public class MusicService {
     private AlbumDAO albumDAO = new AlbumDAOImpl();
     private String filePath = "src/main/resources/albums-repo.csv";
     private List<Album> albums;
+    private View view;
 
     public MusicService() {
         this.albums = readAlbumDataFromFile();
+        this.view = new View();
         showAllAlbums(this.albums);
         System.out.println("#############################################################################################");
         findAllAlbumsByGenre(albums,"opera");
         System.out.println("#############################################################################################");
         findAlbumsByTimeRange(albums,0,3.5);
         System.out.println("#############################################################################################");
-        findTheShortestAlbum(albums);
-        System.out.println("#############################################################################################");
-        findTheLongestAlbum(albums);
-        System.out.println("#############################################################################################");
         findAlbumsByArtist(albums,"Jane Austen");
+        System.out.println("\n");
+        getTheFullReport(albums);
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -46,22 +47,34 @@ public class MusicService {
                 .forEach(System.out::println);
     }
 
-    public void findTheShortestAlbum(List<Album> albums) {
-        albums.stream()
+    public Album findTheShortestAlbum(List<Album> albums) {
+        return albums.stream()
                 .min(Comparator.comparingDouble(Album::getLength))
-                .ifPresent(System.out::println);
+                .get();
     }
 
-    public void findTheLongestAlbum(List<Album> albums) {
-        albums.stream()
+    public Album findTheLongestAlbum(List<Album> albums) {
+        return albums.stream()
                 .max(Comparator.comparingDouble(Album::getLength))
-                .ifPresent(System.out::println);
+                .get();
     }
 
     public void findAlbumsByArtist(List<Album> albums, String artistName) {
         albums.stream()
                 .filter(album -> album.getArtistName().equalsIgnoreCase(artistName))
                 .forEach(System.out::println);
+    }
+
+    public void getTheFullReport(List<Album> albums){
+        view.showFullRaportHeading();
+        view.showTheLongestAlbum(findTheLongestAlbum(albums));
+        view.showTheShortestAlbum(findTheShortestAlbum(albums));
+        view.showTheOldestAlbum(
+                albums.stream()
+                .min(Comparator.comparingInt(Album::getReleaseYear))
+                .get());
+         
+
     }
 
     private List<Album> readAlbumDataFromFile() {
