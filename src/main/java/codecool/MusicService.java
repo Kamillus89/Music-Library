@@ -32,6 +32,8 @@ public class MusicService {
         findAlbumsByArtist(albums,"Jane Austen");
         System.out.println("\n");
         getTheFullReport(albums);
+        System.out.println("#############################################################################################");
+        getSimilarAlbumsByGenre(albums,"opera");
     }
 
     public void showAllAlbums(List<Album> albums){
@@ -94,6 +96,13 @@ public class MusicService {
                                 List::size
                         )))
                 );
+    }
+
+    public void getSimilarAlbumsByGenre(List<Album> albums, String genre) {
+        view.showSimilarAlbumsByGenre(genre,albums
+                .stream()
+                .filter(album -> album.getGenre().equalsIgnoreCase(genre))
+                .collect(Collectors.toList()));
     }
 
     private List<Album> readAlbumDataFromFile() {

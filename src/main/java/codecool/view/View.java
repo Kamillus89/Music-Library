@@ -55,5 +55,7 @@ public class View {
         System.out.println(BLACK_BOLD + BLACK_UNDERLINED + "Full raport: " + RESET);
     }
 
-
+    public void showSimilarAlbumsByGenre(String genre, List<Album> albums) {
+        albums.forEach(System.out::println);
+    }
 }

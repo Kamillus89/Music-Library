@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This interface allows user to read data from file in .CSV format.
+ * This interface allows user to read data.
  * It returns a List of Album and throws IOException if there is no file in provided filePath.
  *
  * @author Kamil Olsza
