@@ -18,7 +18,6 @@ public class AlbumDAOImpl implements AlbumDAO {
             List<Album> albums = lines.map(line -> {
                 String[] arr = line.split(",");
                 return new Album(arr[0],arr[1],Integer.valueOf(arr[2]),arr[3],Double.valueOf(arr[4]));})
-//                    .peek(System.out::println)
                     .collect(Collectors.toList());
             return albums;
         }
