@@ -10,10 +10,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AlbumDAOImpl implements AlbumDAO {
+public class AlbumCsvDAO implements AlbumDAO {
+
+    private String filePath;
+
+    public AlbumCsvDAO(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
-    public List<Album> getAlbumsFromFile(String filePath) throws IOException {
+    public List<Album> getAlbumsFromFile() throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
             List<Album> albums = lines.map(line -> {
                 String[] arr = line.split(",");

@@ -1,22 +1,20 @@
 package codecool;
 
 import codecool.dao.AlbumDAO;
-import codecool.dao.AlbumDAOImpl;
+import codecool.dao.AlbumCsvDAO;
 import codecool.music.Album;
 import codecool.view.View;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MusicService {
 
-    private AlbumDAO albumDAO = new AlbumDAOImpl();
     private String filePath = "src/main/resources/albums-repo.csv";
+    private AlbumDAO albumDAO = new AlbumCsvDAO(filePath);
     private List<Album> albums;
     private View view;
 
@@ -107,7 +105,7 @@ public class MusicService {
 
     private List<Album> readAlbumDataFromFile() {
         try {
-            albums = albumDAO.getAlbumsFromFile(filePath);
+            albums = albumDAO.getAlbumsFromFile();
         } catch (NoSuchFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
