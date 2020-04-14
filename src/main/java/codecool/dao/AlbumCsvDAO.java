@@ -21,9 +21,17 @@ public class AlbumCsvDAO implements AlbumDAO {
     @Override
     public List<Album> getAlbumsFromFile() throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
-            List<Album> albums = lines.map(line -> {
-                String[] arr = line.split(",");
-                return new Album(arr[0],arr[1],Integer.valueOf(arr[2]),arr[3],Double.valueOf(arr[4]));})
+            List<Album> albums = lines
+                    .map(line -> {
+                String[] albumDataArray = line.split(",");
+                    return new Album.Builder()
+                            .artistName(albumDataArray[0])
+                            .albumName(albumDataArray[1])
+                            .releaseYear(Integer.valueOf(albumDataArray[2]))
+                            .genre(albumDataArray[3])
+                            .length(Double.valueOf(albumDataArray[4]))
+                            .build()
+                            ;})
                     .collect(Collectors.toList());
             return albums;
         }

@@ -11,13 +11,7 @@ public class Album {
     private String genre;
     private double length;
 
-    public Album(String artistName, String albumName, int releaseYear, String genre, double length) {
-        this.artistName = artistName;
-        this.albumName = albumName;
-        this.releaseYear = releaseYear;
-        this.genre = genre;
-        this.length = length;
-    }
+    public Album() { }
 
     public String getArtistName() {
         return artistName;
@@ -56,4 +50,50 @@ public class Album {
          */
     }
 
+    public static final class Builder{
+
+        private String artistName;
+        private String albumName;
+        private int releaseYear;
+        private String genre;
+        private double length;
+
+        public Builder artistName(String artistName) {
+            this.artistName = artistName;
+            return this;
+        }
+
+        public Builder albumName(String albumName) {
+            this.albumName = albumName;
+            return this;
+        }
+
+        public Builder releaseYear(int releaseYear) {
+            this.releaseYear = releaseYear;
+            return this;
+        }
+
+        public Builder genre(String genre) {
+            this.genre = genre;
+            return this;
+        }
+
+        public Builder length(double length) {
+            this.length = length;
+            return this;
+        }
+
+        public Album build() {
+
+            Album album = new Album();
+
+            album.artistName = this.artistName;
+            album.albumName = this.albumName;
+            album.releaseYear = this.releaseYear;
+            album.genre = this.genre;
+            album.length = this.length;
+
+            return album;
+        }
+    }
 }
