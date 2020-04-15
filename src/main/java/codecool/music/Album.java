@@ -1,17 +1,21 @@
 package codecool.music;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Album {
 
+    protected static final int RELEASE_YEAR_OF_THE_OLDEST_ACCEPTED_ALBUM = 1920;
     private String artistName;
     private String albumName;
     private int releaseYear;
     private String genre;
     private double length;
 
-    public Album() { }
+    public Album() {
+    }
 
     public String getArtistName() {
         return artistName;
@@ -50,7 +54,7 @@ public class Album {
          */
     }
 
-    public static final class Builder{
+    public static final class Builder {
 
         private String artistName;
         private String albumName;
@@ -68,9 +72,25 @@ public class Album {
             return this;
         }
 
-        public Builder releaseYear(int releaseYear) {
-            this.releaseYear = releaseYear;
+        public Builder releaseYear(String releaseYearStr) {
+            int releaseYearInt = 0;
+            try {
+                if (releaseYearStr.length() != 4) throw new NumberFormatException();
+                releaseYearInt = Integer.parseInt(releaseYearStr);
+                if (isCorrectReleaseYear(releaseYearInt)) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.out.println("Invalid release year, please check correctness of data");
+                releaseYearInt = -1;
+            }
+            this.releaseYear = releaseYearInt;
             return this;
+        }
+
+        private boolean isCorrectReleaseYear(int releaseYearInt) {
+            return releaseYearInt < RELEASE_YEAR_OF_THE_OLDEST_ACCEPTED_ALBUM | releaseYearInt > Integer.parseInt(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
         }
 
         public Builder genre(String genre) {

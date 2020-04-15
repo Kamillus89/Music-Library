@@ -106,8 +106,9 @@ public class MusicService {
     private List<Album> readAlbumDataFromFile() {
         try {
             albums = albumDAO.getAlbumsFromFile();
-        } catch (NoSuchFileException e) {
+        } catch (NoSuchFileException | NullPointerException e) {
             e.printStackTrace();
+            System.out.println("Unfortunately, application could not find any file with provided file name and file path");
         } catch (IOException e) {
             e.printStackTrace();
         }
